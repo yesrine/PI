@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnUp - Création de compte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark-color);
+        }
+
+        .register-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            margin: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .links a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            height: 5px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--error-color);
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .password-hints {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .password-hints ul {
+            padding-left: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>LearnUp</h1>
+        </div>
+        
+        <h2>Créer un compte</h2>
+        
+        <form id="registerForm" action="register.php" method="POST">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" required>
+                </div>
+                <div class="error-message" id="nom-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom" required>
+                </div>
+                <div class="error-message" id="prenom-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" required>
+                </div>
+                <div class="error-message" id="email-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Créez un mot de passe" required>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="password-hints">
+                    <p>Votre mot de passe doit contenir :</p>
+                    <ul>
+                        <li id="length">Au moins 8 caractères</li>
+                        <li id="uppercase">Une lettre majuscule</li>
+                        <li id="number">Un chiffre</li>
+                        <li id="special">Un caractère spécial</li>
+                    </ul>
+                </div>
+                <div class="error-message" id="password-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirmer le mot de passe</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirmez votre mot de passe" required>
+                </div>
+                <div class="error-message" id="confirm-password-error"></div>
+            </div>
+            
+            <button type="submit" class="btn">S'inscrire</button>
+        </form>
+        
+        <div class="links">
+            <span>Déjà un compte ? </span>
+            <a href="connexion.html">Se connecter</a>
+        </div>
+    </div>
+
+    <script>
+        // Validation du formulaire
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Validation du nom
+            const nom = document.getElementById('nom');
+            const nomError = document.getElementById('nom-error');
+            if (nom.value.trim() === '') {
+                nomError.textContent = "Veuillez entrer votre nom";
+                nomError.style.display = 'block';
+                isValid = false;
+            } else {
+                nomError.style.display = 'none';
+            }
+            
+            // Validation du prénom
+            const prenom = document.getElementById('prenom');
+            const prenomError = document.getElementById('prenom-error');
+            if (prenom.value.trim() === '') {
+                prenomError.textContent = "Veuillez entrer votre prénom";
+                prenomError.style.display = 'block';
+                isValid = false;
+            } else {
+                prenomError.style.display = 'none';
+            }
+            
+            // Validation email
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                emailError.textContent = "Veuillez entrer une adresse email valide";
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validation mot de passe
+            const password = document.getElementById('password');
+            const passwordError = document.getElementById('password-error');
+            if (password.value.length < 8) {
+                passwordError.textContent = "Le mot de passe doit contenir au moins 8 caractères";
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (!password.value.match(/[A-Z]/)) {
+                passwordError.textContent = "Le mot de passe doit contenir au moins une majuscule";
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (!password.value.match(/[0-9]/)) {
+                passwordError.textContent = "Le mot de passe doit contenir au moins un chiffre";
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (!password.value.match(/[^A-Za-z0-9]/)) {
+                passwordError.textContent = "Le mot de passe doit contenir au moins un caractère spécial";
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+            
+            // Validation confirmation mot de passe
+            const confirmPassword = document.getElementById('confirm-password');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+            if (confirmPassword.value !== password.value) {
+                confirmPasswordError.textContent = "Les mots de passe ne correspondent pas";
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        // Indicateur de force du mot de passe
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strengthBar');
+            const hints = {
+                length: document.getElementById('length'),
+                uppercase: document.getElementById('uppercase'),
+                number: document.getElementById('number'),
+                special: document.getElementById('special')
+            };
+            
+            let strength = 0;
+            
+            // Vérification des critères
+            const hasLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            
+            // Mise à jour des indications
+            hints.length.style.color = hasLength ? 'var(--success-color)' : 'inherit';
+            hints.uppercase.style.color = hasUppercase ? 'var(--success-color)' : 'inherit';
+            hints.number.style.color = hasNumber ? 'var(--success-color)' : 'inherit';
+            hints.special.style.color = hasSpecial ? 'var(--success-color)' : 'inherit';
+            
+            // Calcul de la force
+            if (hasLength) strength += 25;
+            if (hasUppercase) strength += 25;
+            if (hasNumber) strength += 25;
+            if (hasSpecial) strength += 25;
+            
+            // Mise à jour de la barre
+            strengthBar.style.width = strength + '%';
+            
+            // Couleur de la barre en fonction de la force
+            if (strength < 50) {
+                strengthBar.style.backgroundColor = 'var(--error-color)';
+            } else if (strength < 75) {
+                strengthBar.style.backgroundColor = 'var(--warning-color)';
+            } else {
+                strengthBar.style.backgroundColor = 'var(--success-color)';
+            }
+        });
+    </script>
+</body>
+</html>

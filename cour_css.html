@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introduction à CSS | LearnUp</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2962ff;
+      --primary-dark: #0039cb;
+      --accent: #448aff;
+      --light: #e3f2fd;
+      --dark: #0d47a1;
+      --success: #00c853;
+      --code-bg: #263238;
+      --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f9ff;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* Header animé */
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--primary-dark));
+      color: white;
+      padding: 1.5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(68, 138, 255, 0.1) 0%, transparent 70%);
+      animation: float 15s infinite linear;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Conteneur principal */
+    .cours-container {
+      max-width: 1100px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(41, 98, 255, 0.1);
+    }
+
+    .cours-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h2 i {
+      font-size: 1.8rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    h3 {
+      margin: 2.5rem 0 1.5rem;
+      color: var(--primary-dark);
+      font-size: 1.6rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    h3::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: #444;
+    }
+
+    /* Boîtes de mise en valeur */
+    .highlight-box {
+      background: rgba(41, 98, 255, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(41, 98, 255, 0.1);
+    }
+
+    .highlight-box::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(68, 138, 255, 0.03), transparent);
+      pointer-events: none;
+    }
+
+    .highlight-box strong {
+      color: var(--primary-dark);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      color: #f8f8f2;
+      padding: 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      margin: 1.5rem 0;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    pre::before {
+      content: "CSS";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+      padding: 0.2rem 0.8rem;
+      border-bottom-left-radius: 5px;
+      font-size: 0.8rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+    }
+
+    /* Section de complétion */
+    .completion-section {
+      text-align: center;
+      margin: 3rem auto;
+      max-width: 600px;
+    }
+
+    .btn-certificate {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 5px 20px rgba(41, 98, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-certificate:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(41, 98, 255, 0.4);
+    }
+
+    .btn-certificate:active {
+      transform: translateY(0);
+    }
+
+    .btn-certificate::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-certificate:hover::before {
+      left: 100%;
+    }
+
+    #certificateStatus {
+      margin-top: 1rem;
+      min-height: 24px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #777;
+      transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+      color: var(--primary);
+    }
+
+    .modal-content h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    #certificatePreview {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px dashed #ccc;
+      min-height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, var(--success), #009624);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 200, 83, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--dark), var(--primary-dark));
+      color: white;
+      margin-top: 3rem;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cours-container {
+        padding: 1.5rem;
+        margin: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      h3 {
+        font-size: 1.4rem;
+      }
+
+      .btn-certificate {
+        padding: 1rem 1.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* Animation au scroll */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Démo interactive */
+    .css-demo {
+      margin: 2rem 0;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .demo-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .demo-editor {
+      flex: 1;
+      min-width: 300px;
+      padding: 1.5rem;
+      background: #f8f9fa;
+    }
+
+    .demo-preview {
+      flex: 1;
+      min-width: 300px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+
+    .demo-title {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-weight: 500;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      resize: vertical;
+    }
+
+    .demo-element {
+      width: 200px;
+      height: 100px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-graduation-cap"></i> LearnUp</h1>
+      <nav>
+        <a href="acceuil.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="acceuil.html"><i class="fas fa-book-open"></i> Formations</a>
+        <a href="inscri.html"><i class="fas fa-user"></i> Mon Compte</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="cours-container">
+      <h2><i class="fab fa-css3-alt"></i> Introduction à CSS</h2>
+
+      <p class="animate-on-scroll">
+        CSS (Cascading Style Sheets) est le langage qui donne vie au web. Depuis son introduction en 1996, CSS a révolutionné la façon dont nous concevons les interfaces, permettant une séparation claire entre le contenu (HTML) et la présentation (CSS).
+      </p>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-lightbulb"></i> Saviez-vous ?</strong> 
+        CSS3, la dernière version majeure, a introduit des fonctionnalités avancées comme les animations, les transitions, les flexbox, les grid layouts et les media queries pour le responsive design.
+      </div>
+
+      <h3>🎨 Les fondamentaux de CSS</h3>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-bullseye"></i> Sélecteurs CSS :</strong>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+          <code style="background: rgba(41, 98, 255, 0.1); padding: 8px; border-radius: 5px;">
+            .classe { ... }
+          </code>
+          <code style="background: rgba(41, 98, 255, 0.1); padding: 8px; border-radius: 5px;">
+            #id { ... }
+          </code>
+          <code style="background: rgba(41, 98, 255, 0.1); padding: 8px; border-radius: 5px;">
+            element { ... }
+          </code>
+          <code style="background: rgba(41, 98, 255, 0.1); padding: 8px; border-radius: 5px;">
+            [attribut] { ... }
+          </code>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-sliders-h"></i> Propriétés courantes :</strong>
+        <pre><code>/* Texte */
+color: #333;
+font-family: 'Poppins', sans-serif;
+font-size: 16px;
+text-align: center;
+
+/* Boîte */
+width: 100%;
+padding: 20px;
+margin: 10px auto;
+border: 1px solid #ddd;
+border-radius: 8px;
+
+/* Arrière-plan */
+background: linear-gradient(to right, #2962ff, #448aff);
+background-color: #f8f9fa;
+
+/* Positionnement */
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;</code></pre>
+      </div>
+
+      <h3>✨ CSS Moderne</h3>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-th-large"></i> Flexbox & Grid :</strong>
+        <p>Les nouveaux systèmes de mise en page qui ont révolutionné le design web :</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+          <div>
+            <pre><code>/* Flexbox */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}</code></pre>
+          </div>
+          <div>
+            <pre><code>/* Grid */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-mobile-alt"></i> Responsive Design :</strong>
+        <p>Les media queries permettent d'adapter le design à différentes tailles d'écran :</p>
+        <pre><code>/* Mobile first */
+.container { padding: 10px; }
+
+/* Tablettes */
+@media (min-width: 768px) {
+  .container { padding: 20px; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container { padding: 30px; }
+}</code></pre>
+      </div>
+
+      <h3>💡 Démo Interactive</h3>
+      <div class="css-demo animate-on-scroll">
+        <div class="demo-title">Essayez vous-même !</div>
+        <div class="demo-container">
+          <div class="demo-editor">
+            <p>Modifiez le CSS ci-dessous :</p>
+            <textarea id="css-code">.demo-element {
+  background: #2962ff;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transform: rotate(0deg);
+}</textarea>
+          </div>
+          <div class="demo-preview">
+            <div class="demo-element" id="demo-element">
+              Hello CSS!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>📈 Évolution de CSS</h3>
+      <table class="animate-on-scroll">
+        <thead>
+          <tr>
+            <th>Année</th>
+            <th>Version</th>
+            <th>Nouvelles fonctionnalités</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1996</td>
+            <td>CSS1</td>
+            <td>Propriétés de base (couleurs, polices, marges)</td>
+          </tr>
+          <tr>
+            <td>1998</td>
+            <td>CSS2</td>
+            <td>Positionnement, media types</td>
+          </tr>
+          <tr>
+            <td>2011</td>
+            <td>CSS2.1</td>
+            <td>Corrections et clarifications</td>
+          </tr>
+          <tr>
+            <td>2012+</td>
+            <td>CSS3</td>
+            <td>Modules (animations, transitions, flexbox, grid)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box animate-on-scroll" style="background: rgba(0, 200, 83, 0.1); border-left-color: var(--success);">
+        <strong><i class="fas fa-check-circle"></i> Bonne pratique :</strong> 
+        Utilisez des préprocesseurs comme Sass ou Less pour bénéficier de variables, mixins et fonctions, rendant votre CSS plus maintenable et modulaire.
+      </div>
+    </section>
+
+    <!-- Section de complétion avec certificat -->
+    <div class="completion-section animate-on-scroll">
+      <button id="completeCourseBtn" class="btn-certificate">
+          <i class="fas fa-award"></i> Terminer la formation et obtenir mon certificat
+      </button>
+      <div id="certificateStatus"></div>
+    </div>
+
+    <!-- Modal pour le certificat -->
+    <div id="certificateModal" class="modal">
+      <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h3><i class="fas fa-trophy"></i> Félicitations !</h3>
+          <p>Vous avez complété avec succès le cours "Introduction à CSS"</p>
+          <div id="certificatePreview">
+            <img src="https://via.placeholder.com/500x300?text=Certificat+LearnUp+CSS" alt="Aperçu du certificat" style="max-width: 100%; border-radius: 10px;">
+          </div>
+          <a id="downloadCertificateBtn" class="btn-download" download="Certificat_CSS_LearnUp.pdf">
+              <i class="fas fa-download"></i> Télécharger le certificat
+          </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 LearnUp - Tous droits réservés. <span id="current-year"></span></p>
+  </footer>
+
+  <script>
+    // Gestion du certificat
+    document.getElementById('completeCourseBtn').addEventListener('click', function() {
+      const statusElement = document.getElementById('certificateStatus');
+      statusElement.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Génération de votre certificat en cours...</p>';
+      
+      // Simulation de génération (remplacer par un appel API réel)
+      setTimeout(() => {
+        showCertificateModal();
+        statusElement.innerHTML = '';
+      }, 2000);
+    });
+
+    function showCertificateModal() {
+      document.getElementById('certificateModal').style.display = 'flex';
+    }
+
+    // Fermer le modal
+    document.querySelector('.close-modal').addEventListener('click', function() {
+      document.getElementById('certificateModal').style.display = 'none';
+    });
+
+    // Mettre à jour l'année dans le footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Animation au scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Démo interactive CSS
+    const cssEditor = document.getElementById('css-code');
+    const demoElement = document.getElementById('demo-element');
+
+    cssEditor.addEventListener('input', function() {
+      try {
+        demoElement.style = cssEditor.value;
+      } catch(e) {
+        console.log("Erreur CSS:", e);
+      }
+    });
+
+    // Effet de vague sur le header
+    const header = document.querySelector('header');
+    function createWave() {
+      const wave = document.createElement('div');
+      wave.style.position = 'absolute';
+      wave.style.width = '200%';
+      wave.style.height = '100%';
+      wave.style.top = '0';
+      wave.style.left = '-50%';
+      wave.style.background = 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)';
+      wave.style.animation = `float ${15 + Math.random() * 10}s infinite linear`;
+      wave.style.zIndex = '0';
+      header.appendChild(wave);
+    }
+
+    // Créer plusieurs vagues pour un effet plus riche
+    for (let i = 0; i < 3; i++) {
+      createWave();
+    }
+  </script>
+</body>
+</html>

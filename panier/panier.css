@@ -1,0 +1,286 @@
+/* Styles généraux */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.logo {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 1rem;
+}
+
+.login-btn, .register-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.login-btn {
+    background-color: transparent;
+    border: 1px solid white;
+}
+
+.register-btn {
+    background-color: #3498db;
+    border: 1px solid #3498db;
+}
+
+/* Contenu principal */
+.main-content {
+    padding: 2rem 5%;
+    min-height: 70vh;
+}
+
+.panier-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.panier-container h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Formation dans le panier */
+.formation-panier {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.formation-panier:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.formation-image img {
+    width: 120px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.formation-details {
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+.formation-details h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.formation-details p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7f8c8d;
+}
+
+.formation-prix {
+    text-align: right;
+    min-width: 120px;
+}
+
+.prix-original {
+    text-decoration: line-through;
+    color: #95a5a6;
+    margin: 0;
+}
+
+.prix-promo {
+    font-size: 1.5em;
+    color: #e74c3c;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.supprimer {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #7f8c8d;
+    padding: 5px;
+}
+
+.supprimer:hover {
+    color: #e74c3c;
+}
+
+/* Résumé du panier */
+.resume-panier {
+    border-top: 2px solid #ecf0f1;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.total p {
+    text-align: right;
+    margin: 5px 0;
+}
+
+.total span {
+    display: inline-block;
+    min-width: 80px;
+    text-align: right;
+}
+
+.remise {
+    color: #27ae60;
+}
+
+.total-final {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px !important;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 10px;
+}
+
+/* Boutons d'action */
+.boutons-action {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    gap: 20px;
+}
+
+.boutons-action button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.continuer {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+    flex: 1;
+}
+
+.continuer:hover {
+    background-color: #d5dbdb;
+}
+
+.paiement {
+    background-color: #3498db;
+    color: white;
+    flex: 1;
+}
+
+.paiement:hover {
+    background-color: #2980b9;
+}
+
+/* Options de paiement */
+.options-paiement {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.options-paiement p {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.paiement-logos {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.paiement-logos img {
+    height: 30px;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.paiement-logos img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+    margin-top: 50px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .formation-panier {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .formation-details {
+        padding: 15px 0;
+    }
+    
+    .formation-prix {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .boutons-action {
+        flex-direction: column;
+    }
+    
+    .header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .nav-menu {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .nav-menu a {
+        margin: 0;
+    }
+}

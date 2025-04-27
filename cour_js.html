@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introduction à React.js | LearnUp</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3f37c9;
+      --accent: #4cc9f0;
+      --dark: #282c34;
+      --light: #f8f9fa;
+      --success: #4bb543;
+      --code-bg: #1e1e1e;
+      --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f3f6fc;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* Header animé */
+    header {
+      background: linear-gradient(135deg, var(--dark), #1a1e24);
+      color: white;
+      padding: 1.5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(100, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 15s infinite linear;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #61dafb, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: #61dafb;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      background: rgba(97, 218, 251, 0.1);
+      transform: translateY(-2px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 70%;
+      left: 15%;
+    }
+
+    /* Conteneur principal */
+    .cours-container {
+      max-width: 1100px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cours-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h2 i {
+      font-size: 1.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h3 {
+      margin: 2.5rem 0 1.5rem;
+      color: var(--primary-dark);
+      font-size: 1.6rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    h3::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: #444;
+    }
+
+    /* Boîtes de mise en valeur */
+    .highlight-box {
+      background: rgba(67, 97, 238, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(67, 97, 238, 0.1);
+    }
+
+    .highlight-box::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(76, 201, 240, 0.03), transparent);
+      pointer-events: none;
+    }
+
+    .highlight-box strong {
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      color: #dcdcdc;
+      padding: 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      margin: 1.5rem 0;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    pre::before {
+      content: "JSX";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.1);
+      color: #61dafb;
+      padding: 0.2rem 0.8rem;
+      border-bottom-left-radius: 5px;
+      font-size: 0.8rem;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+    }
+
+    /* Tableau */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(67, 97, 238, 0.03);
+    }
+
+    tr:hover {
+      background-color: rgba(67, 97, 238, 0.08);
+    }
+
+    /* Section de complétion */
+    .completion-section {
+      text-align: center;
+      margin: 3rem auto;
+      max-width: 600px;
+    }
+
+    .btn-certificate {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-certificate:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+    }
+
+    .btn-certificate:active {
+      transform: translateY(0);
+    }
+
+    .btn-certificate::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-certificate:hover::before {
+      left: 100%;
+    }
+
+    #certificateStatus {
+      margin-top: 1rem;
+      min-height: 24px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #777;
+      transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+      color: var(--primary);
+    }
+
+    .modal-content h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    #certificatePreview {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px dashed #ccc;
+      min-height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, var(--success), #3a9a3a);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(74, 181, 67, 0.3);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74, 181, 67, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--dark), #1a1e24);
+      color: white;
+      margin-top: 3rem;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cours-container {
+        padding: 1.5rem;
+        margin: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      h3 {
+        font-size: 1.4rem;
+      }
+
+      .btn-certificate {
+        padding: 1rem 1.8rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-graduation-cap"></i> LearnUp</h1>
+      <nav>
+        <a href="acceuil.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="acceuil.html"><i class="fas fa-book-open"></i> Formations</a>
+        <a href="inscri.html"><i class="fas fa-user"></i> Mon Compte</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="cours-container">
+      <h2><i class="fab fa-react"></i> Introduction à React.js</h2>
+
+      <p>
+        React.js est une bibliothèque JavaScript révolutionnaire développée par Facebook en 2013. Elle a transformé la façon dont nous construisons des interfaces utilisateur modernes, en particulier pour les applications web monopage (SPA) et mobiles.
+      </p>
+
+      <div class="highlight-box">
+        <strong>✨ Pourquoi React ?</strong> Avec plus de 10 millions de téléchargements hebdomadaires sur npm, React est aujourd'hui la bibliothèque front-end la plus populaire, utilisée par des géants comme Facebook, Instagram, Netflix et Airbnb.
+      </div>
+
+      <h3>⚙️ Architecture innovante</h3>
+
+      <div class="highlight-box">
+        <strong><i class="fas fa-cubes"></i> Composants :</strong> L'interface est découpée en composants indépendants et réutilisables. Chaque composant est comme une brique Lego qui peut contenir son propre état, sa logique et son style.
+        <pre><code>// Exemple de composant fonctionnel avec hooks
+function WelcomeBanner({ username }) {
+  const [theme, setTheme] = useState('light');
+  
+  return (
+    &lt;div className={`banner ${theme}`}&gt;
+      &lt;h1&gt;Bienvenue, {username}!&lt;/h1&gt;
+      &lt;button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}&gt;
+        Changer le thème
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <div class="highlight-box">
+        <strong><i class="fas fa-code"></i> JSX :</strong> Une syntaxe extension de JavaScript qui permet d'écrire du HTML dans votre code JavaScript. JSX est transpilé en appels React.createElement() pour créer les éléments du DOM.
+        <pre><code>// JSX vs JavaScript pur
+const element = &lt;h1 className="title"&gt;Hello React!&lt;/h1&gt;;
+
+// Équivaut à :
+const element = React.createElement(
+  'h1',
+  { className: 'title' },
+  'Hello React!'
+);</code></pre>
+      </div>
+
+      <h3>🚀 Fonctionnalités clés</h3>
+
+      <div class="highlight-box">
+        <strong><i class="fas fa-bolt"></i> Virtual DOM :</strong> React maintient une représentation légère en mémoire du DOM réel. Lorsque l'état change, React compare le nouveau Virtual DOM avec l'ancien (diffing algorithm) et met à jour uniquement les parties modifiées (reconciliation).
+      </div>
+
+      <div class="highlight-box">
+        <strong><i class="fas fa-sync-alt"></i> Hooks :</strong> Introduits en 2019, les hooks permettent d'utiliser l'état et d'autres fonctionnalités de React sans écrire de classes. Les principaux hooks sont useState, useEffect, useContext, etc.
+        <pre><code>// Exemple avec useState et useEffect
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    document.title = `Compteur: ${count}`;
+  }, [count]);
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Vous avez cliqué {count} fois&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
+        Cliquez ici
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+
+      <h3>📊 Comparaison des technologies front-end</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Technologie</th>
+            <th>Type</th>
+            <th>Courbe d'apprentissage</th>
+            <th>Performance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>React</strong></td>
+            <td>Bibliothèque UI</td>
+            <td>Moyenne</td>
+            <td>⭐️⭐️⭐️⭐️⭐️</td>
+          </tr>
+          <tr>
+            <td>Angular</td>
+            <td>Framework complet</td>
+            <td>Raide</td>
+            <td>⭐️⭐️⭐️</td>
+          </tr>
+          <tr>
+            <td>Vue.js</td>
+            <td>Framework progressif</td>
+            <td>Douce</td>
+            <td>⭐️⭐️⭐️⭐️</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box" style="background: rgba(75, 181, 67, 0.1); border-left-color: var(--success);">
+        <strong><i class="fas fa-check-circle"></i> Bonne pratique :</strong> Pour les projets React, utilisez Create React App (CRA) ou Vite comme boilerplate. Ces outils configurent automatiquement Webpack, Babel et autres dépendances essentielles.
+      </div>
+
+    </section>
+
+    <!-- Section de complétion avec certificat -->
+    <div class="completion-section">
+      <button id="completeCourseBtn" class="btn-certificate">
+          <i class="fas fa-award"></i> Terminer la formation et obtenir mon certificat
+      </button>
+      <div id="certificateStatus"></div>
+    </div>
+
+    <!-- Modal pour le certificat -->
+    <div id="certificateModal" class="modal">
+      <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h3><i class="fas fa-trophy"></i> Félicitations !</h3>
+          <p>Vous avez complété avec succès le cours "Introduction à React.js"</p>
+          <div id="certificatePreview">
+            <img src="certificat.png" alt="Aperçu du certificat" style="max-width: 100%; border-radius: 10px;">
+          </div>
+          <a id="downloadCertificateBtn" class="btn-download" download="Certificat_React_LearnUp.pdf">
+              <i class="fas fa-download"></i> Télécharger le certificat
+          </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 LearnUp - Tous droits réservés. <span id="current-year"></span></p>
+  </footer>
+
+  <script>
+    // Gestion du certificat
+    document.getElementById('completeCourseBtn').addEventListener('click', function() {
+      const statusElement = document.getElementById('certificateStatus');
+      statusElement.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Génération de votre certificat en cours...</p>';
+      
+      // Simulation de génération (remplacer par un appel API réel)
+      setTimeout(() => {
+        showCertificateModal();
+        statusElement.innerHTML = '';
+      }, 2000);
+    });
+
+    function showCertificateModal() {
+      document.getElementById('certificateModal').style.display = 'flex';
+      
+      // Ici vous pourriez faire un appel API pour générer un vrai certificat
+      // et mettre à jour le lien de téléchargement
+    }
+
+    // Fermer le modal
+    document.querySelector('.close-modal').addEventListener('click', function() {
+      document.getElementById('certificateModal').style.display = 'none';
+    });
+
+    // Mettre à jour l'année dans le footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Animation au scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.highlight-box, table').forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

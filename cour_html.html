@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introduction à HTML | LearnUp</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2a5298;
+      --primary-dark: #1e3c72;
+      --accent: #4b6cb7;
+      --light: #f4f8ff;
+      --dark: #1a1e24;
+      --success: #4bb543;
+      --code-bg: #272822;
+      --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f9ff;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* Header animé */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 1.5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(75, 108, 183, 0.1) 0%, transparent 70%);
+      animation: float 15s infinite linear;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #4b6cb7, #2a5298);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Conteneur principal */
+    .cours-container {
+      max-width: 1100px;
+      margin: 3rem auto;
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(42, 82, 152, 0.1);
+    }
+
+    .cours-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h2 i {
+      font-size: 1.8rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    h3 {
+      margin: 2.5rem 0 1.5rem;
+      color: var(--primary-dark);
+      font-size: 1.6rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    h3::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: #444;
+    }
+
+    /* Boîtes de mise en valeur */
+    .highlight-box {
+      background: rgba(42, 82, 152, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(42, 82, 152, 0.1);
+    }
+
+    .highlight-box::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(75, 108, 183, 0.03), transparent);
+      pointer-events: none;
+    }
+
+    .highlight-box strong {
+      color: var(--primary-dark);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      color: #f8f8f2;
+      padding: 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      margin: 1.5rem 0;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    pre::before {
+      content: "HTML";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+      padding: 0.2rem 0.8rem;
+      border-bottom-left-radius: 5px;
+      font-size: 0.8rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+    }
+
+    /* Tableau */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(42, 82, 152, 0.03);
+    }
+
+    tr:hover {
+      background-color: rgba(42, 82, 152, 0.08);
+    }
+
+    /* Section de complétion */
+    .completion-section {
+      text-align: center;
+      margin: 3rem auto;
+      max-width: 600px;
+    }
+
+    .btn-certificate {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 5px 20px rgba(42, 82, 152, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-certificate:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(42, 82, 152, 0.4);
+    }
+
+    .btn-certificate:active {
+      transform: translateY(0);
+    }
+
+    .btn-certificate::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn-certificate:hover::before {
+      left: 100%;
+    }
+
+    #certificateStatus {
+      margin-top: 1rem;
+      min-height: 24px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #777;
+      transition: color 0.3s;
+    }
+
+    .close-modal:hover {
+      color: var(--primary);
+    }
+
+    .modal-content h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    #certificatePreview {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 10px;
+      border: 1px dashed #ccc;
+      min-height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, var(--success), #3a9a3a);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(74, 181, 67, 0.3);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74, 181, 67, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      margin-top: 3rem;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cours-container {
+        padding: 1.5rem;
+        margin: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      h3 {
+        font-size: 1.4rem;
+      }
+
+      .btn-certificate {
+        padding: 1rem 1.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* Animation au scroll */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-graduation-cap"></i> LearnUp</h1>
+      <nav>
+        <a href="acceuil.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="acceuil.html"><i class="fas fa-book-open"></i> Formations</a>
+        <a href="inscri.html"><i class="fas fa-user"></i> Mon Compte</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="cours-container">
+      <h2><i class="fab fa-html5"></i> Introduction à HTML</h2>
+
+      <p class="animate-on-scroll">
+        HTML (HyperText Markup Language) est le langage fondamental du web. Créé en 1991 par Tim Berners-Lee, il structure le contenu des pages web et reste la pierre angulaire du développement web moderne, avec plus de <strong>1,5 milliard</strong> de sites web l'utilisant.
+      </p>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-lightbulb"></i> Saviez-vous ?</strong> 
+        HTML5, la dernière version majeure, a introduit des éléments sémantiques comme <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, et <code>&lt;article&gt;</code> qui améliorent à la fois la structure et l'accessibilité des sites web.
+      </div>
+
+      <h3>🛠️ Les fondamentaux de HTML</h3>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-code"></i> Structure de base :</strong>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Titre de la page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Contenu visible --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-tags"></i> Balises essentielles :</strong>
+        <ul style="margin-top: 10px; padding-left: 20px;">
+          <li><code>&lt;h1&gt;</code> à <code>&lt;h6&gt;</code> : Titres (heading)</li>
+          <li><code>&lt;p&gt;</code> : Paragraphes</li>
+          <li><code>&lt;a&gt;</code> : Liens hypertextes</li>
+          <li><code>&lt;img&gt;</code> : Images</li>
+          <li><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code> : Listes</li>
+          <li><code>&lt;div&gt;</code> : Conteneur générique</li>
+        </ul>
+      </div>
+
+      <h3>🎯 HTML5 : Les nouveautés</h3>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-star"></i> Éléments sémantiques :</strong>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 10px;">
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;header&gt;</code>
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;nav&gt;</code>
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;section&gt;</code>
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;article&gt;</code>
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;footer&gt;</code>
+          <code style="background: rgba(42, 82, 152, 0.1); padding: 5px; border-radius: 5px; text-align: center;">&lt;figure&gt;</code>
+        </div>
+      </div>
+
+      <div class="highlight-box animate-on-scroll">
+        <strong><i class="fas fa-video"></i> Multimédia natif :</strong>
+        <pre><code>&lt;video width="400" controls&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  Votre navigateur ne supporte pas les vidéos HTML5.
+&lt;/video&gt;
+
+&lt;audio controls&gt;
+  &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+&lt;/audio&gt;</code></pre>
+      </div>
+
+      <h3>📊 Comparaison des versions HTML</h3>
+      <table class="animate-on-scroll">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Année</th>
+            <th>Principales nouveautés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HTML 2.0</td>
+            <td>1995</td>
+            <td>Première version standardisée</td>
+          </tr>
+          <tr>
+            <td>HTML 4.01</td>
+            <td>1999</td>
+            <td>CSS, frames, scripting</td>
+          </tr>
+          <tr>
+            <td>XHTML 1.0</td>
+            <td>2000</td>
+            <td>Syntaxe XML stricte</td>
+          </tr>
+          <tr>
+            <td>HTML5</td>
+            <td>2014</td>
+            <td>Sémantique, multimédia, APIs</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box animate-on-scroll" style="background: rgba(75, 181, 67, 0.1); border-left-color: var(--success);">
+        <strong><i class="fas fa-check-circle"></i> Bonne pratique :</strong> 
+        Validez toujours votre code HTML avec le validateur du W3C (<a href="https://validator.w3.org/" target="_blank" style="color: var(--primary);">validator.w3.org</a>) pour détecter les erreurs et améliorer la compatibilité.
+      </div>
+    </section>
+
+    <!-- Section de complétion avec certificat -->
+    <div class="completion-section animate-on-scroll">
+      <button id="completeCourseBtn" class="btn-certificate">
+          <i class="fas fa-award"></i> Terminer la formation et obtenir mon certificat
+      </button>
+      <div id="certificateStatus"></div>
+    </div>
+
+    <!-- Modal pour le certificat -->
+    <div id="certificateModal" class="modal">
+      <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h3><i class="fas fa-trophy"></i> Félicitations !</h3>
+          <p>Vous avez complété avec succès le cours "Introduction à HTML"</p>
+          <div id="certificatePreview">
+            <img src="https://via.placeholder.com/500x300?text=Certificat+LearnUp+HTML" alt="Aperçu du certificat" style="max-width: 100%; border-radius: 10px;">
+          </div>
+          <a id="downloadCertificateBtn" class="btn-download" download="Certificat_HTML_LearnUp.pdf">
+              <i class="fas fa-download"></i> Télécharger le certificat
+          </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 LearnUp - Tous droits réservés. <span id="current-year"></span></p>
+  </footer>
+
+  <script>
+    // Gestion du certificat
+    document.getElementById('completeCourseBtn').addEventListener('click', function() {
+      const statusElement = document.getElementById('certificateStatus');
+      statusElement.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Génération de votre certificat en cours...</p>';
+      
+      // Simulation de génération (remplacer par un appel API réel)
+      setTimeout(() => {
+        showCertificateModal();
+        statusElement.innerHTML = '';
+      }, 2000);
+    });
+
+    function showCertificateModal() {
+      document.getElementById('certificateModal').style.display = 'flex';
+      
+      // Ici vous pourriez faire un appel API pour générer un vrai certificat
+      // et mettre à jour le lien de téléchargement
+    }
+
+    // Fermer le modal
+    document.querySelector('.close-modal').addEventListener('click', function() {
+      document.getElementById('certificateModal').style.display = 'none';
+    });
+
+    // Mettre à jour l'année dans le footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Animation au scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Effet de vague sur le header
+    const header = document.querySelector('header');
+    function createWave() {
+      const wave = document.createElement('div');
+      wave.style.position = 'absolute';
+      wave.style.width = '200%';
+      wave.style.height = '100%';
+      wave.style.top = '0';
+      wave.style.left = '-50%';
+      wave.style.background = 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)';
+      wave.style.animation = `float ${15 + Math.random() * 10}s infinite linear`;
+      wave.style.zIndex = '0';
+      header.appendChild(wave);
+    }
+
+    // Créer plusieurs vagues pour un effet plus riche
+    for (let i = 0; i < 3; i++) {
+      createWave();
+    }
+  </script>
+</body>
+</html>
